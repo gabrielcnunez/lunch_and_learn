@@ -13,6 +13,15 @@
 # it.
 #
 # See https://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
+
+# Start simplecov test coverage gem
+require 'simplecov'
+SimpleCov.start 'rails'
+SimpleCov.add_filter %w[spec config application_cable bin channels mailers jobs contollers poros services]
+
+# Configure webmock for mocking external API calls during testing
+require 'webmock/rspec'
+
 RSpec.configure do |config|
   # rspec-expectations config goes here. You can use an alternate
   # assertion/expectation library such as wrong or the stdlib/minitest
