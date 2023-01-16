@@ -43,4 +43,5 @@ describe 'The Learning Resources API' do
         expect(resource[:attributes].keys.size).to eq(3)
       end
     # end
+    end
   end
