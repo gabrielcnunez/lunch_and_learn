@@ -35,8 +35,8 @@ describe 'The Recipes API' do
 
   it 'can find recipes based on a random country' do
     VCR.use_cassette('all_countries') do
-      json_response = File.read('spec/fixtures/sample_json/some_random_country.json')
-      stub_request(:any, /edamam/).to_return(status: 200, body: json_response)
+      json_response = File.read('spec/fixtures/sample_json/recipes_from_some_random_country.json')
+      stub_request(:get, /edamam/).to_return(status: 200, body: json_response)
       get '/api/v1/recipes'
     end
 
