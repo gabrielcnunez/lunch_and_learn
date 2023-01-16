@@ -79,5 +79,6 @@ VCR.configure do |config|
   config.hook_into :webmock
   config.filter_sensitive_data('<recipe_app_id>') { ENV['recipe_app_id'] }
   config.filter_sensitive_data('<recipe_api_key>') { ENV['recipe_api_key'] }
+  config.filter_sensitive_data('<video_api_key>') { ENV['video_api_key'] }
   config.configure_rspec_metadata!
 end
