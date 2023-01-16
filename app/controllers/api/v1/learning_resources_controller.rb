@@ -3,6 +3,6 @@ class Api::V1::LearningResourcesController < ApplicationController
     country = params[:country]
     video = VideoFacade.get_video(country)
     images = ImagesFacade.get_images(country)
-    render json: LearningResourceSerializer.new(video, images)
+    render json: LearningResourceSerializer.serialize_resources(country, video, images)
   end
 end
