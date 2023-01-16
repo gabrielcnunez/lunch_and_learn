@@ -59,4 +59,21 @@ describe 'The Recipes API' do
       expect(recipes[:data][0][:attributes].keys.size).to eq(4)
     end
   end
+
+  it 'returns an empty array when no recipes match the chosen country' do
+    VCR.use_cassette('no_recipes_from_kyrgyzstan') do
+      country = 'kyrgyzstan'
+
+      get "/api/v1/recipes?country=#{country}"
+
+      expect(response).to be_successful
+
+      no_recipes = JSON.parse(response.body,symbolize_names: true)
+
+      expect(no_recipes).to be_a(Hash)
+      expect(no_recipes).to have_key(:data)
+      expect(no_recipes[:data]).to be_an(Array)
+      expect(no_recipes[:data]).to eq([])
+    end
+  end
 end
