@@ -28,6 +28,7 @@ describe 'The Recipes API' do
         expect(recipe[:attributes]).to have_key(:country)
         expect(recipe[:attributes][:country]).to eq(country)
         expect(recipe[:attributes]).to have_key(:image)
+        expect(recipe[:attributes].keys.size).to eq(4)
       end
     end
   end
