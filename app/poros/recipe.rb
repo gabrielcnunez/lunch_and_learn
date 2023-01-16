@@ -5,7 +5,6 @@ class Recipe
               :image
 
   def initialize(data, country)
-    require 'pry'; binding.pry
     @title   = data[:recipe][:label]
     @url     = data[:recipe][:url]
     @country = country

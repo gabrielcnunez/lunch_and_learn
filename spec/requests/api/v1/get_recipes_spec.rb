@@ -15,9 +15,9 @@ describe 'The Recipes API' do
       expect(recipes).to have_key(:data)
       expect(recipes[:data]).to be_an(Array)
 
-      recipes.each do |recipe|
+      recipes[:data].each do |recipe|
         expect(recipe).to have_key(:id)
-        expect(recipe[:id]).to eq(null)
+        expect(recipe[:id]).to eq(nil)
 
         expect(recipe).to have_key(:type)
         expect(recipe[:type]).to eq("recipe")
