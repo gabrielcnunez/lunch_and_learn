@@ -6,7 +6,6 @@ class VideosService
       f.params['q']         = country
       f.params['type']      = 'video'
     end
-    require 'pry'; binding.pry
     JSON.parse(response.body,symbolize_names: true)
   end 
 

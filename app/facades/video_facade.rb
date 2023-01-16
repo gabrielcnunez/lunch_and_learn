@@ -1,8 +1,9 @@
 class VideoFacade
   def self.get_video(country)
     videos = VideosService.get_videos(country)
-    videos[:items].first.map do |video|
+    require 'pry'; binding.pry
+    videos[:items].map do |video|
       Video.new(video)
-    end
+    end.first
   end
 end
