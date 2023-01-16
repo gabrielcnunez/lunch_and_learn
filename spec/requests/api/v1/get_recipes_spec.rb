@@ -76,4 +76,19 @@ describe 'The Recipes API' do
       expect(no_recipes[:data]).to eq([])
     end
   end
+
+  it 'returns an empty array when an empty string is given as a parameter' do
+    VCR.use_cassette('no_recipes_with_empty_string') do
+      get "/api/v1/recipes?country="
+
+      expect(response).to be_successful
+
+      no_recipes = JSON.parse(response.body,symbolize_names: true)
+
+      expect(no_recipes).to be_a(Hash)
+      expect(no_recipes).to have_key(:data)
+      expect(no_recipes[:data]).to be_an(Array)
+      expect(no_recipes[:data]).to eq([])
+    end
+  end
 end
