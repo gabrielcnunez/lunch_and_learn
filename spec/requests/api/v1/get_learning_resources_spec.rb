@@ -2,9 +2,12 @@ require 'rails_helper'
 
 describe 'The Learning Resources API' do
   let(:response_body_1) { File.open('./spec/fixtures/sample_json/laos_video_search.json')}
+  let(:response_body_2) { File.open('./spec/fixtures/sample_json/laos_images_search.json')}
 
-  it 'can find learning resources based on the name of a country' do
+  it 'can get learning resources based on the name of a country' do
     stub_request(:get, /googleapis/).to_return(status: 200, body: response_body_1)
+    stub_request(:get, /unsplash/).to_return(status: 200, body: response_body_2)
+    
     country = 'laos'
 
     get "/api/v1/learning_resources?country=#{country}"
