@@ -34,27 +34,29 @@ describe 'The Recipes API' do
   end
 
   it 'can find recipes based on a random country' do
-    get "/api/v1/recipes"
+    VCR.use_cassette('get_recipes_from_random_country') do
+      get "/api/v1/recipes"
 
-    expect(response).to be_successful
+      expect(response).to be_successful
 
-    recipes = JSON.parse(response.body,symbolize_names: true)
+      recipes = JSON.parse(response.body,symbolize_names: true)
 
-    expect(recipes).to be_a(Hash)
-    expect(recipes).to have_key(:data)
-    expect(recipes[:data]).to be_an(Array)
-    
-    expect(recipes[:data][0]).to have_key(:id)
-    expect(recipes[:data][0][:id]).to eq(nil)
+      expect(recipes).to be_a(Hash)
+      expect(recipes).to have_key(:data)
+      expect(recipes[:data]).to be_an(Array)
+      
+      expect(recipes[:data][0]).to have_key(:id)
+      expect(recipes[:data][0][:id]).to eq(nil)
 
-    expect(recipes[:data][0]).to have_key(:type)
-    expect(recipes[:data][0][:type]).to eq('recipe')
+      expect(recipes[:data][0]).to have_key(:type)
+      expect(recipes[:data][0][:type]).to eq('recipe')
 
-    expect(recipes[:data][0]).to have_key(:attributes)
-    expect(recipes[:data][0][:attributes]).to have_key(:title)
-    expect(recipes[:data][0][:attributes]).to have_key(:url)
-    expect(recipes[:data][0][:attributes]).to have_key(:country)
-    expect(recipes[:data][0][:attributes]).to have_key(:image)
-    expect(recipes[:data][0][:attributes].keys.size).to eq(4)
+      expect(recipes[:data][0]).to have_key(:attributes)
+      expect(recipes[:data][0][:attributes]).to have_key(:title)
+      expect(recipes[:data][0][:attributes]).to have_key(:url)
+      expect(recipes[:data][0][:attributes]).to have_key(:country)
+      expect(recipes[:data][0][:attributes]).to have_key(:image)
+      expect(recipes[:data][0][:attributes].keys.size).to eq(4)
+    end
   end
 end
