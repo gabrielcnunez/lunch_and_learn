@@ -5,7 +5,7 @@ class Api::V1::FavoritesController < ApplicationController
     if @user.nil?
       render json: ErrorSerializer.invalid_key, status: :bad_request
     else
-      render json: FavoriteSerializer(@user.favorites)
+      render json: FavoriteSerializer.new(@user.favorites)
     end
   end
   
