@@ -5,4 +5,11 @@ class ErrorSerializer
       "errors": messages
     }
   end
+  
+  def self.invalid_key
+    {
+      "message": "Invalid api-key",
+      "errors": ["No user found with the api-key submitted"]
+    }
+  end
 end
