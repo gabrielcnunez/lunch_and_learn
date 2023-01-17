@@ -8,8 +8,8 @@ class ErrorSerializer
   
   def self.invalid_key
     {
-      "message": "Invalid api-key",
-      "errors": ["No user found with the api-key submitted"]
+      "message": "Invalid api_key",
+      "errors": ["No user found with the api_key submitted"]
     }
   end
 end
