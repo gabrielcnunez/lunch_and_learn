@@ -31,11 +31,6 @@ describe 'The Learning Resources API' do
 
     expect(resources[:data][:attributes]).to have_key(:country)
     expect(resources[:data][:attributes][:country]).to eq(country)
-    
-    expect(resources[:data][:attributes]).to have_key(:video)
-    expect(resources[:data][:attributes][:video]).to be_a(Hash)
-    expect(resources[:data][:attributes][:video]).to have_key(:title)
-    expect(resources[:data][:attributes][:video]).to have_key(:youtube_video_id)
 
     expect(resources[:data][:attributes]).to have_key(:video)
     expect(resources[:data][:attributes][:video]).to be_a(Hash)
