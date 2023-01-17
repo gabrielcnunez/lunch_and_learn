@@ -22,7 +22,7 @@ describe 'The Users API' do
 
       expect(Favorite.all.count).to eq(0)
 
-      post '/api/v1/favorites', headers: headers, params: JSON.generate(favorite_params)
+      post '/api/v1/favorites', headers: headers, params: JSON.generate(fav_params)
   
       expect(Favorite.all.count).to eq(1)
 
@@ -38,7 +38,7 @@ describe 'The Users API' do
       
       expect(new_favorite.country).to eq(fav_params[:country])
       expect(new_favorite.recipe_link).to eq(fav_params[:recipe_link])
-      expect(new_favorite.recipe_title).to eq(fav_params[:recipe_title)
+      expect(new_favorite.recipe_title).to eq(fav_params[:recipe_title])
       expect(new_favorite.user_id).to eq(user.id)
     end
   end
