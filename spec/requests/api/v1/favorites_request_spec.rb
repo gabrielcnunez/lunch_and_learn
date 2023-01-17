@@ -146,5 +146,23 @@ describe 'The Users API' do
       expect(error_data).to have_key(:errors)
       expect(error_data[:errors]).to eq(['No user found with the api_key submitted'])
     end
+
+    it 'returns an empty array if the user has no favorites' do
+      headers = {
+                    'Content-Type' => 'application/json',
+                    'Accept' => 'application/json'        
+                }
+      
+      get "/api/v1/favorites?api_key=#{@user3.api_key}", headers: headers
+
+      no_data = JSON.parse(response.body, symbolize_names: true)
+      
+      expect(response).to be_successful 
+      expect(response.status).to eq(200)
+
+      expect(no_data).to be_a(Hash)
+      expect(no_data).to have_key(:data)
+      expect(no_data[:data]).to eq([])
+    end
   end
 end
