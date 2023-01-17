@@ -1,7 +1,7 @@
 class ErrorSerializer
-  def self.missing_attributes(messages)
+  def self.registration_error(messages)
     {
-      "message": "Record is missing one or more attributes",
+      "message": "Registration cannot be completed",
       "errors": messages
     }
   end
