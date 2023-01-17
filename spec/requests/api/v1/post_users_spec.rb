@@ -40,4 +40,33 @@ describe 'The Users API' do
     expect(user_data[:data][:attributes][:email]).to eq(new_user.email)
     expect(user_data[:data][:attributes]).to have_key(:api_key)
   end
+
+  it 'returns an error if registration email is already in use' do
+    User.create!(name: name: 'Athena Dao', email: 'athenadao@bestgirlever.com')
+
+    user_params = { 
+      name: 'NOT Athena',
+      email: 'athenadao@bestgirlever.com'
+    }
+    headers = {
+      'Content-Type' => 'application/json',
+      'Accept' => 'application/json'        
+    }
+
+    expect(User.all.count).to eq(1)
+
+    post '/api/v1/users', headers: headers, params: JSON.generate(user_params)
+
+    expect(User.all.count).to eq(1)
+
+    error_data = JSON.parse(response.body, symbolize_names: true)
+
+    expect(response.status).to eq(400)
+
+    expect(error_data).to be_a(Hash)
+    expect(error_data).to have_key(:message)
+    expect(error_data[:message]).to eq('Registration cannot be completed')
+    expect(error_data).to have_key(:errors)
+    expect(error_data[:errors]).to eq('Email has already been taken')
+  end
 end
