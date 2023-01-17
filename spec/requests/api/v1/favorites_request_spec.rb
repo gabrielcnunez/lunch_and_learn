@@ -11,9 +11,9 @@ describe 'The Users API' do
 
       fav_params = { 
                         api_key: user.api_key,
-                        country: 'thailand',
+                        country: 'vietnam',
                         recipe_link: 'https://www.seriouseats.com/kenji_rulez.html',
-                        recipe_title: 'Garlic Noodles (A San Francisco Treat, not THE San Francisco Treat)'
+                        recipe_title: 'Garlic Noodles (a San Francisco Treat, not THE San Francisco Treat)'
                     }
       headers = {
                     'Content-Type' => 'application/json',
@@ -33,7 +33,7 @@ describe 'The Users API' do
       expect(response.status).to eq(201)
 
       expect(response_data).to be_a(Hash)
-      expect(response_data).to have_key(:sucess)
+      expect(response_data).to have_key(:success)
       expect(response_data[:success]).to eq("Favorite added successfully")
       
       expect(new_favorite.country).to eq(fav_params[:country])
