@@ -49,13 +49,13 @@ describe 'The Users API' do
                 )
 
     user_params = { 
-      name: 'NOT Athena',
-      email: 'athenadao@bestgirlever.com'
-    }
+                      name: 'NOT Athena',
+                      email: 'athenadao@bestgirlever.com'
+                  }
     headers = {
-      'Content-Type' => 'application/json',
-      'Accept' => 'application/json'        
-    }
+                  'Content-Type' => 'application/json',
+                  'Accept' => 'application/json'        
+              }
 
     expect(User.all.count).to eq(1)
 
@@ -72,5 +72,30 @@ describe 'The Users API' do
     expect(error_data[:message]).to eq('Registration cannot be completed')
     expect(error_data).to have_key(:errors)
     expect(error_data[:errors]).to eq(['Email has already been taken'])
+  end
+
+  it 'returns an error if registration attributes are missing' do
+    user_params = { 
+                      name: '',
+                      email: ''
+                  }
+    headers = {
+                  'Content-Type' => 'application/json',
+                  'Accept' => 'application/json'        
+              }
+
+    post '/api/v1/users', headers: headers, params: JSON.generate(user_params)
+
+    expect(User.all.count).to eq(0)
+
+    error_data = JSON.parse(response.body, symbolize_names: true)
+
+    expect(response.status).to eq(400)
+
+    expect(error_data).to be_a(Hash)
+    expect(error_data).to have_key(:message)
+    expect(error_data[:message]).to eq('Registration cannot be completed')
+    expect(error_data).to have_key(:errors)
+    expect(error_data[:errors]).to eq(["Name can't be blank", "Email can't be blank"])
   end
 end
