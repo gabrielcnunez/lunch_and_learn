@@ -12,8 +12,8 @@ describe 'The Users API' do
       fav_params = { 
                         api_key: user.api_key,
                         country: 'vietnam',
-                        favorite_link: 'https://www.seriouseats.com/kenji_rulez.html',
-                        favorite_title: 'Garlic Noodles (a San Francisco Treat, not THE San Francisco Treat)'
+                        recipe_link: 'https://www.seriouseats.com/kenji_rulez.html',
+                        recipe_title: 'Garlic Noodles (a San Francisco Treat, not THE San Francisco Treat)'
                     }
       headers = {
                     'Content-Type' => 'application/json',
@@ -37,8 +37,8 @@ describe 'The Users API' do
       expect(response_data[:success]).to eq("Favorite added successfully")
       
       expect(new_favorite.country).to eq(fav_params[:country])
-      expect(new_favorite.favorite_link).to eq(fav_params[:favorite_link])
-      expect(new_favorite.favorite_title).to eq(fav_params[:favorite_title])
+      expect(new_favorite.recipe_link).to eq(fav_params[:recipe_link])
+      expect(new_favorite.recipe_title).to eq(fav_params[:recipe_title])
       expect(new_favorite.user_id).to eq(user.id)
     end
 
@@ -77,42 +77,32 @@ describe 'The Users API' do
   end
 
   describe 'GET favorites' do
-    it 'can find all favorites for a given user' do
-      user1 = User.create!(
-                          name: 'Athena Dao',
-                          email: 'athenadao@bestgirlever.com',
-                          api_key: SecureRandom.alphanumeric(12)
-                          )
-      user2 = User.create!(
-                          name: 'Leila T Cat',
-                          email: 'leilathecat@bestgirlever.com',
-                          api_key: SecureRandom.alphanumeric(12)
-                          )
+    before :each do
+      @user1 = User.create!(name: 'Athena Dao', email: 'athenadao@bestgirlever.com',
+                            api_key: SecureRandom.alphanumeric(12))
+      @user2 = User.create!(name: 'Leila T Cat', email: 'leilathecat@bestgirlever.com',
+                            api_key: SecureRandom.alphanumeric(12))
+      
+      @favorite1 = Favorite.create!(user_id: @user1.id, country: 'vietnam',
+      recipe_link: 'https://www.seriouseats.com/kenji_rulez.html',
+      recipe_title: 'Garlic Noodles (a San Francisco Treat, not THE San Francisco Treat)')
+      
+      @favorite2 = Favorite.create!(user_id: @user1.id,country: 'egypt',
+      recipe_link: 'http://www.thekitchn.com/why-is-the-e-missing.html',
+      recipe_title: 'Recipe: Egyptian Tomato Soup')                    
+      
+      @favorite3 = Favorite.create!(user_id: @user2.id, country: 'thailand',
+      recipe_link: 'https://www.tastingtable.com/fried-rice-is-delicious.html',
+      recipe_title: 'Crab Fried Rice (Khaao Pad Bpu)')
+    end
 
-      favorite1 = Favorite.create!( 
-                                  user_id: user1.id,
-                                  country: 'vietnam',
-                                  recipe_link: 'https://www.seriouseats.com/kenji_rulez.html',
-                                  recipe_title: 'Garlic Noodles (a San Francisco Treat, not THE San Francisco Treat)'
-                                  )
-      favorite2 = Favorite.create!( 
-                                  user_id: user1.id,
-                                  country: 'egypt',
-                                  recipe_link: 'http://www.thekitchn.com/why-is-the-e-missing.html',
-                                  recipe_title: 'Recipe: Egyptian Tomato Soup'
-                                  )                    
-      favorite3 = Favorite.create!( 
-                                  user_id: user2.id,
-                                  country: 'thailand',
-                                  recipe_link: 'https://www.tastingtable.com/fried-rice-is-delicious.html',
-                                  recipe_title: 'Crab Fried Rice (Khaao Pad Bpu)'
-                                  )                    
+    it 'can find all favorites for a given user' do              
       headers = {
                     'Content-Type' => 'application/json',
                     'Accept' => 'application/json'        
                 }
 
-      get "/api/v1/favorites?api_key=#{user1.api_key}", headers: headers
+      get "/api/v1/favorites?api_key=#{@user1.api_key}", headers: headers
 
       favorites = JSON.parse(response.body,symbolize_names: true)
 
