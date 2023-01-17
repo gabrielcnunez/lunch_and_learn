@@ -1,8 +1,12 @@
 class VideoFacade
   def self.get_video(country)
     videos = VideosService.get_videos(country)
-    videos[:items].map do |video|
-      Video.new(video)
-    end.first
+    if videos[:items].empty?
+      nil
+    else
+      videos[:items].map do |video|
+        Video.new(video)
+      end.first
+    end
   end
 end
