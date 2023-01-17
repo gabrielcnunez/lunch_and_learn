@@ -42,7 +42,11 @@ describe 'The Users API' do
   end
 
   it 'returns an error if registration email is already in use' do
-    User.create!(name: name: 'Athena Dao', email: 'athenadao@bestgirlever.com')
+    User.create!(
+                name: 'Athena Dao',
+                email: 'athenadao@bestgirlever.com',
+                api_key: SecureRandom.alphanumeric(12)
+                )
 
     user_params = { 
       name: 'NOT Athena',
@@ -67,6 +71,6 @@ describe 'The Users API' do
     expect(error_data).to have_key(:message)
     expect(error_data[:message]).to eq('Registration cannot be completed')
     expect(error_data).to have_key(:errors)
-    expect(error_data[:errors]).to eq('Email has already been taken')
+    expect(error_data[:errors]).to eq(['Email has already been taken'])
   end
 end
