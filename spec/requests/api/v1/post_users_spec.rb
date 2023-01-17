@@ -28,7 +28,7 @@ describe 'The Users API' do
     expect(user_data[:data]).to be_an(Hash)
 
     expect(user_data[:data]).to have_key(:id)
-    expect(user_data[:data][:id]).to eq(new_user.id)
+    expect(user_data[:data][:id]).to eq(new_user.id.to_s)
     expect(user_data[:data]).to have_key(:type)
     expect(user_data[:data][:type]).to eq("user")
     expect(user_data[:data]).to have_key(:attributes)
