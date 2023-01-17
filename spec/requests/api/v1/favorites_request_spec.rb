@@ -79,9 +79,11 @@ describe 'The Users API' do
   describe 'GET favorites' do
     before :each do
       @user1 = User.create!(name: 'Athena Dao', email: 'athenadao@bestgirlever.com',
-                            api_key: SecureRandom.alphanumeric(12))
+                            api_key: '123456abcdef')
       @user2 = User.create!(name: 'Leila T Cat', email: 'leilathecat@bestgirlever.com',
-                            api_key: SecureRandom.alphanumeric(12))
+                            api_key: 'abc123def456')
+      @user3 = User.create!(name: 'Mister Martini', email: 'martidog@bestboyever.com',
+      api_key: 'a1b2c3d4e5f6')
       
       @favorite1 = Favorite.create!(user_id: @user1.id, country: 'vietnam',
       recipe_link: 'https://www.seriouseats.com/kenji_rulez.html',
@@ -96,7 +98,7 @@ describe 'The Users API' do
       recipe_title: 'Crab Fried Rice (Khaao Pad Bpu)')
     end
 
-    it 'can find all favorites for a given user' do              
+    it 'can get all favorites for a given user' do              
       headers = {
                     'Content-Type' => 'application/json',
                     'Accept' => 'application/json'        
@@ -104,6 +106,7 @@ describe 'The Users API' do
 
       get "/api/v1/favorites?api_key=#{@user1.api_key}", headers: headers
 
+      expect(response).to be_successful 
       favorites = JSON.parse(response.body,symbolize_names: true)
 
       expect(favorites).to be_a(Hash)
@@ -123,6 +126,25 @@ describe 'The Users API' do
         expect(favorite[:attributes]).to have_key(:created_at)
         expect(favorite[:attributes].keys.size).to eq(4)
       end
+    end
+
+    it 'returns an error when an invalid api_key is used to get all favorites' do
+      headers = {
+                    'Content-Type' => 'application/json',
+                    'Accept' => 'application/json'        
+                }
+      
+      get "/api/v1/favorites?api_key=zyxwvu098765", headers: headers
+
+      error_data = JSON.parse(response.body, symbolize_names: true)
+
+      expect(response.status).to eq(400)
+
+      expect(error_data).to be_a(Hash)
+      expect(error_data).to have_key(:message)
+      expect(error_data[:message]).to eq('Invalid api_key')
+      expect(error_data).to have_key(:errors)
+      expect(error_data[:errors]).to eq(['No user found with the api_key submitted'])
     end
   end
 end
