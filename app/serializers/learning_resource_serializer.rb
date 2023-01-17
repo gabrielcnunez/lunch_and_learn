@@ -25,4 +25,18 @@ class LearningResourceSerializer
       list << image
     end
   end
+
+  def self.no_results_found(country)
+    {
+        data: {
+            id: nil,
+            type: "learning_resource",
+            attributes: {
+                country: country,
+                video: {},
+                images: []
+            }
+        }
+    }
+  end
 end
