@@ -1,10 +1,10 @@
 require 'rails_helper'
 
 describe 'The Learning Resources API' do
-  let(:response_body_1) { File.open('./spec/fixtures/sample_json/laos_video_search.json')}
-  let(:response_body_2) { File.open('./spec/fixtures/sample_json/laos_images_search.json')}
-  let(:response_body_3) { File.open('./spec/fixtures/sample_json/no_videos_found.json')}
-  let(:response_body_4) { File.open('./spec/fixtures/sample_json/no_images_found.json')}
+  let(:response_body_1) { File.open('./spec/fixtures/sample_json/laos_video_search.json') }
+  let(:response_body_2) { File.open('./spec/fixtures/sample_json/laos_images_search.json') }
+  let(:response_body_3) { File.open('./spec/fixtures/sample_json/no_videos_found.json') }
+  let(:response_body_4) { File.open('./spec/fixtures/sample_json/no_images_found.json') }
 
   it 'can get learning resources based on the name of a country' do
     stub_request(:get, /googleapis/).to_return(status: 200, body: response_body_1)
