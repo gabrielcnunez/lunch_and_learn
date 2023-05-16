@@ -13,7 +13,7 @@ The purpose of this project is to simulate the real-world challenge of developin
 - [Tech & Tools Used](#tech-and-tools)
 - [How to Set Up](#how-to-set-up)
 - [How to Run Test Suite](#how-to-run-test-suite)
-- [Available Endpoints](#use-of-bīk-n-brü)
+- [Available Endpoints](#available-endpoints)
 - [Contributors](#contributors)
 <br>
     
