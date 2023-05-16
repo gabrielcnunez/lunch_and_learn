@@ -275,7 +275,7 @@ The purpose of this project is to simulate the real-world challenge of developin
   <tr>
     <td>
       <div align="center"><a href="https://github.com/GabrielCNunez">GitHub</a><br>
-      <a href="https://www.linkedin.com/in/gabriel-c-nunez/">LinkedIn</a></div>
+      <a href="https://www.linkedin.com/in/gabriel-nunez-az/">LinkedIn</a></div>
     </td>
   </tr>
 </table>
